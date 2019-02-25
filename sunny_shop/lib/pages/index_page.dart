@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart'; // 谷歌风格
 import 'package:flutter/cupertino.dart';// 类似iOS风格
+// pages
+import 'profile_page.dart';
+import 'cart_page.dart';
+import 'category_page.dart';
+import 'home_page.dart';
+
 
 
 class IndexPages extends StatefulWidget {
@@ -11,6 +17,7 @@ class IndexPages extends StatefulWidget {
 }
 
 class _IndexPagesState extends State<IndexPages> {
+
   // 底部4个tabbar
   final List<BottomNavigationBarItem> bottomTabs = [
      BottomNavigationBarItem(
@@ -31,10 +38,41 @@ class _IndexPagesState extends State<IndexPages> {
      ), 
   ];
 
+  // 4个根页面
+  final List tabPages = [
+    HomePage(),
+    CategoryPage(),
+    CartPage(),
+    ProfilePage(),
+  ];
+  // 当前选中索引
+  int currentIndex = 0;
+  var currentPage;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    currentPage =tabPages[currentIndex];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: widget.child,
+    return Scaffold(
+      backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
+      bottomNavigationBar: BottomNavigationBar(
+        // 点击tab 切换效果
+        type: BottomNavigationBarType.fixed,  // 少于3个看不出效果
+        currentIndex: currentIndex,
+        items: bottomTabs,
+        onTap: (index){
+          setState(() {
+            currentIndex =index;
+            currentPage =tabPages[currentIndex];
+          });
+        },
+      ),
+      body: currentPage,
     );
   }
 }
