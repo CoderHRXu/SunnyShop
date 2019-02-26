@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import '../config/httpHeaders.dart';
+import '../service/service_methods.dart';
 
+
+/*
 class HomePage extends StatefulWidget {
   final Widget child;
   HomePage({Key key, this.child}) : super(key: key);
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
-
+*/
 
 /*
 class HomePage extends StatefulWidget {
