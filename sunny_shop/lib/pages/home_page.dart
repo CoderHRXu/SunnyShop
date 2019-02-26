@@ -20,7 +20,8 @@ class _HomePageState extends State<HomePage> {
       body: Container(
           child: Scaffold(
             appBar: AppBar(title: Text('美好人间'),),
-            body: Container(
+            body: SingleChildScrollView(
+              child: Container(
               child: Column(
                 children: <Widget>[
                   TextField(
@@ -48,7 +49,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-      )
+      ),
+            )
+            
+            
+            
     );
   }
 
@@ -87,6 +92,17 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future postHttp(String typeName) async{
+
+    var url = 'https://www.easy-mock.com/mock/5c60131a4bed3a6342711498/baixing/post_dabaojian';
+    try {
+      Response response;
+      var data = {'name' :typeName};
+      response =await Dio().post(url, queryParameters:data);
+      return response;
+    } catch (e) {
+    }
+  }
 }
 
 
