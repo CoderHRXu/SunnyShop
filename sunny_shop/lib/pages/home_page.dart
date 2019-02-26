@@ -1,6 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import '../config/httpHeaders.dart';
 
+class HomePage extends StatefulWidget {
+  final Widget child;
+  HomePage({Key key, this.child}) : super(key: key);
+
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String showText = '还没有请求数据';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('请求远程数据'),),
+      body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              RaisedButton(
+                child: Text('请求数据'),
+                onPressed: _geek
+              ),
+
+              Text(showText),
+            ],
+          ),
+      ),
+    );
+  }
+
+  void _geek(){
+    print('开始向极客时间请求数据.....');
+    getHttp().then((data){
+      setState(() {
+        showText =data['data'].toString();
+      });
+    });
+  }
+
+  Future getHttp() async {
+    try {
+      var url = 'https://time.geekbang.org/serv/v1/column/newAll';
+      Response response;
+      Dio  dio =Dio();
+      dio.options.headers =httpHeaders;
+      response = await dio.get(url);
+      print(response);
+      return response.data;
+
+    } catch (e) {
+      return print(e);
+    }
+  }
+}
+
+
+/*
 class HomePage extends StatefulWidget {
   final Widget child;
 
@@ -104,7 +161,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
-
+*/
 
 
   
