@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../service/service_methods.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'dart:convert';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class HomePage extends StatefulWidget {
   final Widget child;
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
               ],
             );
           }else{
-              return Center(child: Text('正在加载'),);
+              return Center(child: Text('正在加载'));
           }
         },
       )
@@ -61,8 +63,16 @@ class SwiperDiy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // 初始化
+    ScreenUtil.instance =ScreenUtil(width: 750, height: 1334)..init(context);
+    print('设备像素密度：${ScreenUtil.pixelRatio}');
+    print('设备像素高度：${ScreenUtil.screenHeight}');
+    print('设备像素宽度：${ScreenUtil.screenWidth}');
+
     return Container(
-      height: 200,
+      height: ScreenUtil().setHeight(333),
+      width: ScreenUtil().setWidth(750),
       // width: ,
       child: Swiper(
         itemBuilder: (BuildContext context, int index){
