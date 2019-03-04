@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../service/service_methods.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// 自定义view
+import '../widgets/SwiperDiy.dart';
+import '../widgets/TopNavigator.dart';
+import '../widgets/AdBanner.dart';
 
 class HomePage extends StatefulWidget {
   final Widget child;
@@ -38,9 +41,14 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
             var data = json.decode(snapshot.data.toString());
             List<Map> swiper = (data['data']['slides'] as List).cast();
+            List<Map> navigatorList = (data['data']['category'] as List).cast();
+            String adUrl =data['data']['advertesPicture']['PICTURE_ADDRESS'];
+
             return Column(
               children: <Widget>[
-                SwiperDiy(swiperDataList: swiper,)
+                SwiperDiy(swiperDataList: swiper,),
+                TopNavigator(navigatorList: navigatorList),
+                AdBanner(adUrl: adUrl,)
               ],
             );
           }else{
@@ -54,38 +62,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 
-// 首页轮播控件
-class SwiperDiy extends StatelessWidget {
-  
-  final List swiperDataList;
 
-  SwiperDiy({Key key, this.swiperDataList}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-
-    // 初始化
-    ScreenUtil.instance =ScreenUtil(width: 750, height: 1334)..init(context);
-    print('设备像素密度：${ScreenUtil.pixelRatio}');
-    print('设备像素高度：${ScreenUtil.screenHeight}');
-    print('设备像素宽度：${ScreenUtil.screenWidth}');
-
-    return Container(
-      height: ScreenUtil().setHeight(333),
-      width: ScreenUtil().setWidth(750),
-      // width: ,
-      child: Swiper(
-        itemBuilder: (BuildContext context, int index){
-          return Image.network("${swiperDataList[index]['image']}",fit: BoxFit.fill,);
-        },
-        itemCount: swiperDataList.length,
-        // 点点点 导航器
-        pagination: new SwiperPagination(),
-        autoplay: true,
-      ),
-    );
-  }
-}
 
 
 /*
