@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/SwiperDiy.dart';
 import '../widgets/TopNavigator.dart';
 import '../widgets/AdBanner.dart';
+import '../widgets/LeaderPhone.dart';
 
 class HomePage extends StatefulWidget {
   final Widget child;
@@ -43,12 +44,15 @@ class _HomePageState extends State<HomePage> {
             List<Map> swiper = (data['data']['slides'] as List).cast();
             List<Map> navigatorList = (data['data']['category'] as List).cast();
             String adUrl =data['data']['advertesPicture']['PICTURE_ADDRESS'];
+            String leaderImage =data['data']['shopInfo']['leaderImage'];
+            String leaderPhone =data['data']['shopInfo']['leaderPhone'];
 
             return Column(
               children: <Widget>[
                 SwiperDiy(swiperDataList: swiper,),
                 TopNavigator(navigatorList: navigatorList),
-                AdBanner(adUrl: adUrl,)
+                AdBanner(adUrl: adUrl,),
+                LeaderPhone(leaderImage: leaderImage, leaderPhone: leaderPhone,)
               ],
             );
           }else{
