@@ -4,10 +4,11 @@ import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 自定义view
-import '../widgets/SwiperDiy.dart';
-import '../widgets/TopNavigator.dart';
-import '../widgets/AdBanner.dart';
-import '../widgets/LeaderPhone.dart';
+import '../widgets/swiper_diy.dart';
+import '../widgets/top_navigator.dart';
+import '../widgets/ad_banner.dart';
+import '../widgets/leader_phone.dart';
+import '../widgets/recommend.dart';
 
 class HomePage extends StatefulWidget {
   final Widget child;
@@ -41,20 +42,25 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot){
           if (snapshot.hasData) {
             var data = json.decode(snapshot.data.toString());
-            List<Map> swiper = (data['data']['slides'] as List).cast();
+            List<Map> swiper        = (data['data']['slides'] as List).cast();
             List<Map> navigatorList = (data['data']['category'] as List).cast();
-            String adUrl =data['data']['advertesPicture']['PICTURE_ADDRESS'];
-            String leaderImage =data['data']['shopInfo']['leaderImage'];
-            String leaderPhone =data['data']['shopInfo']['leaderPhone'];
+            String adUrl            =data['data']['advertesPicture']['PICTURE_ADDRESS'];
+            String leaderImage      =data['data']['shopInfo']['leaderImage'];
+            String leaderPhone      =data['data']['shopInfo']['leaderPhone'];
+            List<Map> recommendList =(data['data']['recommend'] as List).cast();
 
-            return Column(
-              children: <Widget>[
-                SwiperDiy(swiperDataList: swiper,),
-                TopNavigator(navigatorList: navigatorList),
-                AdBanner(adUrl: adUrl,),
-                LeaderPhone(leaderImage: leaderImage, leaderPhone: leaderPhone,)
-              ],
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  SwiperDiy(swiperDataList: swiper,),
+                  TopNavigator(navigatorList: navigatorList),
+                  AdBanner(adUrl: adUrl,),
+                  LeaderPhone(leaderImage: leaderImage, leaderPhone: leaderPhone,),
+                  Recommend(recommendList: recommendList,)
+                ],
+              ),
             );
+             
           }else{
               return Center(child: Text('正在加载'));
           }
