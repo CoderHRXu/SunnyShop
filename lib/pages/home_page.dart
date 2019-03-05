@@ -10,6 +10,9 @@ import '../widgets/ad_banner.dart';
 import '../widgets/leader_phone.dart';
 import '../widgets/recommend.dart';
 
+// model
+import '../model/model_homepage.dart';
+
 class HomePage extends StatefulWidget {
   final Widget child;
 
@@ -18,7 +21,10 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
 
   String homePageContent = '正在获取数据';
 
@@ -41,13 +47,15 @@ class _HomePageState extends State<HomePage> {
         future: getHomePageContent(),
         builder: (context, snapshot){
           if (snapshot.hasData) {
-            var data = json.decode(snapshot.data.toString());
+            var data                = json.decode(snapshot.data.toString());
             List<Map> swiper        = (data['data']['slides'] as List).cast();
             List<Map> navigatorList = (data['data']['category'] as List).cast();
             String adUrl            =data['data']['advertesPicture']['PICTURE_ADDRESS'];
             String leaderImage      =data['data']['shopInfo']['leaderImage'];
             String leaderPhone      =data['data']['shopInfo']['leaderPhone'];
             List<Map> recommendList =(data['data']['recommend'] as List).cast();
+
+            // var homeData            = HomePageDataModel.fromJson(data);
 
             return SingleChildScrollView(
               child: Column(

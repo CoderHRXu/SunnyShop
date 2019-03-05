@@ -41,7 +41,7 @@ class _IndexPagesState extends State<IndexPages> {
   ];
 
   // 4个根页面
-  final List tabPages = [
+  final List<Widget> tabPages = [
     HomePage(),
     CategoryPage(),
     CartPage(),
@@ -78,7 +78,10 @@ class _IndexPagesState extends State<IndexPages> {
           });
         },
       ),
-      body: currentPage,
+      body: IndexedStack(
+        index: currentIndex,
+        children: tabPages
+      ) ,
     );
   }
 }

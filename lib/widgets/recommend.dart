@@ -36,7 +36,7 @@ class Recommend extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-            left: BorderSide(width: 0.5, color:Colors.white12),
+            left: BorderSide(width: 1, color:Colors.white12),
 
           )
         ),
