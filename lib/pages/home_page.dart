@@ -9,6 +9,7 @@ import '../widgets/top_navigator.dart';
 import '../widgets/ad_banner.dart';
 import '../widgets/leader_phone.dart';
 import '../widgets/recommend.dart';
+import '../widgets/floor_content.dart';
 
 // model
 import '../model/model_homepage.dart';
@@ -54,6 +55,10 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
             String leaderImage      =data['data']['shopInfo']['leaderImage'];
             String leaderPhone      =data['data']['shopInfo']['leaderPhone'];
             List<Map> recommendList =(data['data']['recommend'] as List).cast();
+            String floor1Title      = data['data']['floor1Pic']['PICTURE_ADDRESS'];
+            String floor2Title      = data['data']['floor1Pic']['PICTURE_ADDRESS'];
+            String floor3Title      = data['data']['floor1Pic']['PICTURE_ADDRESS'];
+            List<Map> floor1        =(data['data']['floor1'] as List).cast();
 
             // var homeData            = HomePageDataModel.fromJson(data);
 
@@ -64,7 +69,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
                   TopNavigator(navigatorList: navigatorList),
                   AdBanner(adUrl: adUrl,),
                   LeaderPhone(leaderImage: leaderImage, leaderPhone: leaderPhone,),
-                  Recommend(recommendList: recommendList,)
+                  Recommend(recommendList: recommendList,),
+                  FloorTitleWidget(picture_address: floor1Title,),
+                  FloorContentWidget(floorGoodsList: floor1,),
                 ],
               ),
             );
