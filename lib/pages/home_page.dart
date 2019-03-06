@@ -56,10 +56,11 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
             String leaderPhone      =data['data']['shopInfo']['leaderPhone'];
             List<Map> recommendList =(data['data']['recommend'] as List).cast();
             String floor1Title      = data['data']['floor1Pic']['PICTURE_ADDRESS'];
-            String floor2Title      = data['data']['floor1Pic']['PICTURE_ADDRESS'];
-            String floor3Title      = data['data']['floor1Pic']['PICTURE_ADDRESS'];
+            String floor2Title      = data['data']['floor2Pic']['PICTURE_ADDRESS'];
+            String floor3Title      = data['data']['floor3Pic']['PICTURE_ADDRESS'];
             List<Map> floor1        =(data['data']['floor1'] as List).cast();
-
+            List<Map> floor2        =(data['data']['floor2'] as List).cast();
+            List<Map> floor3        =(data['data']['floor3'] as List).cast();
             // var homeData            = HomePageDataModel.fromJson(data);
 
             return SingleChildScrollView(
@@ -72,6 +73,10 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
                   Recommend(recommendList: recommendList,),
                   FloorTitleWidget(picture_address: floor1Title,),
                   FloorContentWidget(floorGoodsList: floor1,),
+                  FloorTitleWidget(picture_address: floor2Title,),
+                  FloorContentWidget(floorGoodsList: floor2,),
+                  FloorTitleWidget(picture_address: floor3Title,),
+                  FloorContentWidget(floorGoodsList: floor3,),
                 ],
               ),
             );
