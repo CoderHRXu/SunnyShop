@@ -10,6 +10,7 @@ import '../widgets/ad_banner.dart';
 import '../widgets/leader_phone.dart';
 import '../widgets/recommend.dart';
 import '../widgets/floor_content.dart';
+import '../widgets/hot_good.dart';
 
 // model
 import '../model/model_homepage.dart';
@@ -32,20 +33,22 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
   @override
   void initState() {
     // TODO: implement initState
-    getHomePageContent().then((value){
-        setState(() {
-          homePageContent =value.toString();
-        });
-    });
+    // getHomePageContent().then((value){
+    //     setState(() {
+    //       homePageContent =value.toString();
+    //     });
+    // });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var formData = {'lon' : '115.02932', 'lat':'35.76189'};
+
     return Scaffold(
       appBar: AppBar(title: Text('百姓生活+'),),
       body: FutureBuilder(
-        future: getHomePageContent(),
+        future: request('homePageContent', formData),
         builder: (context, snapshot){
           if (snapshot.hasData) {
             var data                = json.decode(snapshot.data.toString());
@@ -77,6 +80,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
                   FloorContentWidget(floorGoodsList: floor2,),
                   FloorTitleWidget(picture_address: floor3Title,),
                   FloorContentWidget(floorGoodsList: floor3,),
+                  HootGoods()
                 ],
               ),
             );
