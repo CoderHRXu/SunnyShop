@@ -37,6 +37,7 @@ class TopNavigator extends StatelessWidget {
       child: GridView.count(
         crossAxisCount: 5, // 每行5个
         padding: EdgeInsets.all(5.0),
+        childAspectRatio: 0.88,
         children: navigatorList.map((item){
             return _gridViewItemUI(context, item);
         }).toList(),

@@ -25,6 +25,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
 
+  int pageNo = 1;
+  List<Map> hotGoodsList = [];
+
   @override
   bool get wantKeepAlive => true;
 
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
     return Scaffold(
       appBar: AppBar(title: Text('百姓生活+'),),
       body: FutureBuilder(
-        future: request('homePageContent', formData),
+        future: request('homePageContent',formData),
         builder: (context, snapshot){
           if (snapshot.hasData) {
             var data                = json.decode(snapshot.data.toString());
@@ -80,7 +83,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
                   FloorContentWidget(floorGoodsList: floor2,),
                   FloorTitleWidget(picture_address: floor3Title,),
                   FloorContentWidget(floorGoodsList: floor3,),
-                  HootGoods()
+                  // HootGoods()
                 ],
               ),
             );
@@ -92,6 +95,47 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
       )
 
     );
+  }
+  /**
+   * 获取火爆专区
+   */
+  void _getHotGoods(){
+    var formData = {'page' : pageNo};
+    request('homePageBelowConten', formData).then((value){
+      var data =json.decode(value.toString());
+      List<Map> newGoods =(data['data'] as List).cast();
+      setState((){
+        hotGoodsList.addAll(newGoods);
+        pageNo++;
+      });
+    });
+  }
+
+  Widget hotTitle =Container(
+    margin: EdgeInsets.only(top: 10.0),
+    alignment: Alignment.center,
+    color: Colors.transparent,
+    child: Text('火爆专区'),
+  );
+
+  Widget _warpList() {
+    if (hotGoodsList.length != 0) {
+      List<Widget> listWidget =hotGoodsList.map((value){
+          return InkWell(
+            onTap: (){
+
+            },
+            child:Container(
+              width: ScreenUtil().setWidth(372),
+              color: Colors.white,
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(bottom: 3.0), 
+               
+            ),
+          );
+      }).toList();
+    } else {
+    }
   }
 }
 
