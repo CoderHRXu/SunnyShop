@@ -48,14 +48,14 @@ Future getHomePageContent() async {
 
 
 // 获火爆专区商品
-Future getHomePageBelowContent() async {
+Future getHomePageBelowContent(int pageNo) async {
   try {
     print('开始获取爆专区商品数据....');
     Response response;
     Dio dio = new Dio();
     dio.options.contentType =ContentType.parse("application/x-www-form-urlencoded"); // 表单
-    int page = 1;
-    response =await dio.post(servicePath['homePageBelowContent'], data: page);
+    
+    response =await dio.post(servicePath['homePageBelowContent'], data: {"page" : pageNo});
     if (response.statusCode == 200) {
       return response.data;
     }else{
