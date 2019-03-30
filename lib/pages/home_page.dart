@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../service/service_methods.dart';
 import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 // 自定义view
 import '../widgets/swiper_diy.dart';
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
 
   int pageNo = 1;
   List<Map> hotGoodsList = [];
-
+  GlobalKey<RefreshFooterState> _footerKey = new GlobalKey<RefreshFooterState>();
   @override
   bool get wantKeepAlive => true;
 
@@ -35,7 +36,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
 
   @override
   void initState() {
-    _getHotGoods();
     super.initState();
   }
 
@@ -64,10 +64,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
             List<Map> floor3        =(data['data']['floor3'] as List).cast();
             // var homeData            = HomePageDataModel.fromJson(data);
 
-            return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SwiperDiy(swiperDataList: swiper,),
+            ListView listView = ListView(
+              children: <Widget>[
+                SwiperDiy(swiperDataList: swiper,),
                   TopNavigator(navigatorList: navigatorList),
                   AdBanner(adUrl: adUrl,),
                   LeaderPhone(leaderImage: leaderImage, leaderPhone: leaderPhone,),
@@ -80,9 +79,24 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
                   FloorContentWidget(floorGoodsList: floor3,),
                   // HootGoods()
                   _hotGoods()
-                ],
-              ),
+              ],
             );
+            
+            return EasyRefresh(
+              refreshFooter: ClassicsFooter(
+                key: _footerKey,
+                bgColor: Colors.white,
+                textColor: Colors.pink,
+                moreInfoColor: Colors.pink,
+                showMore: true,
+                noMoreText: "没有更多数据了",
+                loadedText: "正在加载...",
+                loadReadyText: "松开即将开始加载更多",
+              ),
+              loadMore: loadMoreHotGoods,
+              child: listView,
+            );
+            
              
           }else{
               return Center(child: Text('正在加载'));
@@ -92,18 +106,19 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
 
     );
   }
+
   /**
    * 获取火爆专区商品数据
    */
-  void _getHotGoods(){
-    getHomePageBelowContent(pageNo).then((value){
+  Future loadMoreHotGoods() async {
+    print("start load more hot goods");
+    pageNo++;
+    await getHomePageBelowContent(pageNo).then((value){
         var data =json.decode(value.toString());
         List<Map> newsGoods = (data['data'] as List).cast();
-        print("=====");
         print(newsGoods.length);
         setState(() {
           hotGoodsList.addAll(newsGoods);
-          pageNo ++;
         });
     });
   }
