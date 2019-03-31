@@ -90,8 +90,10 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
                 moreInfoColor: Colors.pink,
                 showMore: true,
                 noMoreText: "没有更多数据了",
-                loadedText: "正在加载...",
-                loadReadyText: "松开即将开始加载更多",
+                loadingText: "正在加载...",
+                loadReadyText: "即将开始加载更多",
+                loadText: "上拉加载更多"
+                
               ),
               loadMore: loadMoreHotGoods,
               child: listView,
