@@ -66,3 +66,24 @@ Future getHomePageBelowContent(int pageNo) async {
   }
   
 }
+
+
+// 获火爆专区商品
+Future getCategory() async {
+  try {
+    print('开始获取分类页面数据....');
+    Response response;
+    Dio dio = new Dio();
+    dio.options.contentType =ContentType.parse("application/x-www-form-urlencoded"); // 表单
+    
+    response =await dio.post(servicePath['getCategory']);
+    if (response.statusCode == 200) {
+      return response.data;
+    }else{
+      throw Exception('后端接口出现异常');
+    }
+  } catch (e) {
+    return print('ERROR: =============> $e');
+  }
+  
+}

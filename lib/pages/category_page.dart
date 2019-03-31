@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import '../service/service_methods.dart';
+import 'dart:convert';
 
-class CategoryPage extends StatelessWidget {
-  final Widget child;
 
-  CategoryPage({Key key, this.child}) : super(key: key);
+class CategoryPage extends StatefulWidget {
+  @override
+  _CategoryPageState createState() => _CategoryPageState();
+}
 
+class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('分类'),
-      ),
+    _getCategoryData();
+    return Center(
+      child: Text('分类页面stf'),
     );
   }
+}
+
+void _getCategoryData () {
+  getCategory().then((value){
+    var data = json.decode(value.toString());
+    print(data);
+  });
 }
