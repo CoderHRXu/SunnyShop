@@ -69,7 +69,7 @@ Future getHomePageBelowContent(int pageNo) async {
 
 
 // 获火爆专区商品
-Future getCategory() async {
+Future getCategory () async {
   try {
     print('开始获取分类页面数据....');
     Response response;

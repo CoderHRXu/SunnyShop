@@ -15,7 +15,11 @@ class _HootGoodsState extends State<HootGoods> {
     // TODO: implement initState
     
     super.initState();
-    request('homePageBelowContent', 1).then((value){
+    // request('homePageBelowContent', 1).then((value){
+    //   print('homePageBelowContent call back');
+    //   print(value);
+    // });
+    getHomePageBelowContent(1).then((value){
       print('homePageBelowContent call back');
       print(value);
     });
